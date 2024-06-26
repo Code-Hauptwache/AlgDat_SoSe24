@@ -1,94 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct Item {
+int hash(int value);
+void initHashTable();
+int insert(int value);
+int search(int value);
+int delete(int value);
+void printCollisions();
+
+typedef struct Item
+{
     int value;
     struct Item *next;
 } Item;
 
 Item *statetab[31];
 
-int hash(int value) {
-    return 1; // Hash function that always returns 1
-}
-
-void initHashTable() {
-    for (int i = 0; i < 31; i++) {
-        statetab[i] = NULL;
-    }
-}
-
-int insert(int value) {
-    int index = hash(value);
-    Item *newItem = (Item *)malloc(sizeof(Item));
-    if (!newItem) return -1; // memory allocation failed
-    newItem->value = value;
-    newItem->next = NULL;
-
-    Item *current = statetab[index];
-    while (current != NULL) {
-        if (current->value == value) {
-            free(newItem);
-            return -1; // value already exists
-        }
-        current = current->next;
-    }
-
-    newItem->next = statetab[index];
-    statetab[index] = newItem;
-    return 0;
-}
-
-int search(int value) {
-    int index = hash(value);
-    Item *current = statetab[index];
-    while (current != NULL) {
-        if (current->value == value) {
-            return 0; // value found
-        }
-        current = current->next;
-    }
-    return -1; // value not found
-}
-
-int delete(int value) {
-    int index = hash(value);
-    Item *current = statetab[index];
-    Item *prev = NULL;
-
-    while (current != NULL) {
-        if (current->value == value) {
-            if (prev == NULL) {
-                statetab[index] = current->next;
-            } else {
-                prev->next = current->next;
-            }
-            free(current);
-            return 0; // value deleted
-        }
-        prev = current;
-        current = current->next;
-    }
-    return -1; // value not found
-}
-
-void printCollisions() {
-    for (int i = 0; i < 31; i++) {
-        int count = 0;
-        Item *current = statetab[i];
-        while (current != NULL) {
-            count++;
-            current = current->next;
-        }
-        if (count > 1) {
-            printf("Collision at index %d: %d items\n", i, count);
-        } else if (count == 1) {
-            printf("Index %d: 1 item\n", i);
-        } else {
-            printf("Index %d: no items\n", i);
-        }
-    }
-}
 
 int main() {
     initHashTable();
@@ -111,4 +38,107 @@ int main() {
     printCollisions();
 
     return 0;
+}
+
+int hash(int value) 
+{
+    return 1; // Hash function that always returns 1
+}
+
+void initHashTable()
+{
+    for (int i = 0; i < 31; i++)
+    {
+        statetab[i] = NULL;
+    }
+}
+
+int insert(int value)
+{
+    int index = hash(value);
+    Item *newItem = (Item *)malloc(sizeof(Item));
+    if (!newItem) return -1; // memory allocation failed
+    newItem->value = value;
+    newItem->next = NULL;
+
+    Item *current = statetab[index];
+    while (current != NULL)
+    {
+        if (current->value == value)
+        {
+            free(newItem);
+            return -1; // value already exists
+        }
+        current = current->next;
+    }
+
+    newItem->next = statetab[index];
+    statetab[index] = newItem;
+    return 0;
+}
+
+int search(int value)
+{
+    int index = hash(value);
+    Item *current = statetab[index];
+    while (current != NULL) {
+        if (current->value == value) {
+            return 0; // value found
+        }
+        current = current->next;
+    }
+    return -1; // value not found
+}
+
+int delete(int value)
+{
+    int index = hash(value);
+    Item *current = statetab[index];
+    Item *prev = NULL;
+
+    while (current != NULL)
+    {
+        if (current->value == value)
+        {
+            if (prev == NULL)
+            {
+                statetab[index] = current->next;
+            }
+            else
+            {
+                prev->next = current->next;
+            }
+            free(current);
+            return 0; // value deleted
+        }
+        prev = current;
+        current = current->next;
+    }
+    return -1; // value not found
+}
+
+void printCollisions()
+{
+    for (int i = 0; i < 31; i++)
+    {
+        int count = 0;
+        Item *current = statetab[i];
+        while (current != NULL) 
+        {
+            count++;
+            current = current->next;
+        }
+        if (count > 1)
+        {
+            printf("Collision at index %d: %d items\n", i, count);
+        }
+        else if (count == 1)
+        {
+            printf("Index %d: 1 item\n", i);
+        }
+        else
+        {
+            printf("Index %d: no items\n", i);
+        }
+    }
 }
