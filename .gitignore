@@ -1,0 +1,82 @@
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore all dirs
+!*/
+
+# Unignore Makefiles
+!Makefile
+!*/Makefile
+
+# Ignore object files
+*.o
+*.obj
+
+# Ignore libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Ignore dynamic libraries
+*.dll
+*.dylib
+*.so
+
+# Ignore executables
+*.exe
+*.out
+*.app
+*.bin
+*.run
+
+# Ignore dependency files
+*.d
+
+# Ignore compiled files
+*.class
+
+# Ignore directories created by build tools
+build/
+bin/
+debug/
+release/
+
+# Ignore Visual Studio files
+*.vcxproj
+*.vcxproj.user
+*.sln
+*.vcproj
+*.vcproj.user
+ipch/
+*.opensdf
+*.sdf
+*.cachefile
+*.pdb
+*.log
+*.obj
+*.pch
+*.idb
+*.ipdb
+*.iobj
+
+# Ignore temporary files
+*~
+*.swp
+*.tmp
+
+# Ignore all MacOS specific files
+.DS_Store
+
+# Ignore .vscode directory
+.vscode/
+
+# Optionally, ignore files without extensions in specific directories
+# Uncomment and adjust the following lines if needed
+# build/[!.]*[!./]
+# bin/[!.]*[!./]
+# debug/[!.]*[!./]
+# release/[!.]*[!./]
