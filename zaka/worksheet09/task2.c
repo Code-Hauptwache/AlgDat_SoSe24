@@ -86,6 +86,30 @@ void printCollisions() {
     }
 }
 
+void printItemsAtIndex(int index) {
+    Item *current = statetab[index];
+    while (current != NULL) {
+        printf("%d ", current->value);
+        current = current->next;
+    }
+    printf("\n");
+}
+
+void displayItemsHashedAtIndex() {
+    int index;
+    // Do until user enters "quit"/'q'
+    while (1) {
+        printf("Enter index to display items (enter 'q' to quit): ");
+        char input[10];
+        scanf("%s", input);
+        if (input[0] == 'q' || input[0] == 'Q') {
+            break;
+        }
+        index = atoi(input);
+        printItemsAtIndex(index);
+    }
+}
+
 int main() {
     initHashTable();
 
@@ -105,6 +129,9 @@ int main() {
 
     // Print collisions
     printCollisions();
+
+    // Display items hashed at a specific index
+    displayItemsHashedAtIndex();
 
     return 0;
 }
