@@ -16,7 +16,6 @@ typedef struct Item
 
 Item *statetab[31];
 
-
 int main() {
     initHashTable();
 
