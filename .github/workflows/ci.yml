@@ -17,30 +17,20 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y g++ gcc make python3
 
-      - name: Compile all .cpp, .c and run .py files and run Makefiles
+      - name: Compile all .cpp, .c and run .py files
         run: |
-          # Find and compile all .cpp, .c and run .py files in /task[nummer] directories
-          find . -regex '.*/task[0-9]+' -type d | while read task_dir; do
-            echo "Processing directory: $task_dir"
-            makefile="$task_dir/Makefile"
-            if [ -f "$makefile" ]; then
-              echo "Found Makefile in $task_dir, running make..."
-              make -C "$task_dir"
-            else
-              # Compile all .cpp files
-              find "$task_dir" -maxdepth 1 -name '*.cpp' | while read cpp_file; do
-                echo "Compiling $cpp_file"
-                g++ -Wall -g -std=c++20 -o "${cpp_file%.cpp}" "$cpp_file"
-              done
-              # Compile all .c files
-              find "$task_dir" -maxdepth 1 -name '*.c' | while read c_file; do
-                echo "Compiling $c_file"
-                gcc -Wall -g -std=c11 -o "${c_file%.c}" "$c_file"
-              done
-              # Run all .py files
-              find "$task_dir" -maxdepth 1 -name '*.py' | while read py_file; do
-                echo "Running $py_file"
-                python3 "$py_file"
-              done
-            fi
+          # Compile all .cpp files
+          find . -name '*.cpp' | while read cpp_file; do
+            echo "Compiling $cpp_file"
+            g++ -Wall -g -std=c++20 -o "${cpp_file%.cpp}" "$cpp_file"
+          done
+          # Compile all .c files
+          find . -name '*.c' | while read c_file; do
+            echo "Compiling $c_file"
+            gcc -Wall -g -std=c11 -o "${c_file%.c}" "$c_file"
+          done
+          # Run all .py files
+          find . -name '*.py' | while read py_file; do
+            echo "Running $py_file"
+            python3 "$py_file"
           done
